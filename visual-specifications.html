@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumisMarket - Visual Specifications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .db-table {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #f59e0b, #ef4444);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-8 shadow-xl">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">NumisMarket</h1>
+                    <p class="text-gray-300 text-lg">Old Coins & Paper Currency E-Commerce Platform</p>
+                    <p class="text-amber-400 text-sm mt-1">Interactive Product Specifications</p>
+                </div>
+                <div class="text-right">
+                    <div class="bg-amber-500 text-gray-900 px-4 py-2 rounded-lg font-semibold">
+                        Production Ready
+                    </div>
+                    <div class="text-sm text-gray-400 mt-2">Full-Stack Application</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <nav class="flex space-x-1 overflow-x-auto">
+                <button onclick="switchTab('overview')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="overview">
+                    📋 Overview
+                </button>
+                <button onclick="switchTab('features')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="features">
+                    ⭐ Features
+                </button>
+                <button onclick="switchTab('architecture')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="architecture">
+                    🏗️ Architecture
+                </button>
+                <button onclick="switchTab('database')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="database">
+                    🗄️ Database
+                </button>
+                <button onclick="switchTab('tech-stack')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="tech-stack">
+                    💻 Tech Stack
+                </button>
+                <button onclick="switchTab('roadmap')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="roadmap">
+                    🚀 Roadmap
+                </button>
+                <button onclick="switchTab('scalability')" class="tab-btn px-6 py-4 font-semibold text-gray-600 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-500 whitespace-nowrap" data-tab="scalability">
+                    📈 Scalability
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Project Overview</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-6 rounded-lg border border-amber-200">
+                        <h3 class="text-xl font-semibold text-amber-900 mb-3">🎯 Purpose</h3>
+                        <p class="text-gray-700">A professional e-commerce platform for buying and selling collectible old coins and paper currency, with streamlined admin management and customer order processing.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-semibold text-blue-900 mb-3">👥 Target Users</h3>
+                        <ul class="text-gray-700 space-y-2">
+                            <li>✓ Coin & currency collectors</li>
+                            <li>✓ History enthusiasts</li>
+                            <li>✓ Investors</li>
+                            <li>✓ Store administrators</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
+                        <div class="text-2xl font-bold text-green-700">8 Weeks</div>
+                        <div class="text-sm text-gray-600">Estimated Development Time</div>
+                    </div>
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500">
+                        <div class="text-2xl font-bold text-purple-700">Production</div>
+                        <div class="text-sm text-gray-600">Ready for Deployment</div>
+                    </div>
+                    <div class="bg-orange-50 p-5 rounded-lg border-l-4 border-orange-500">
+                        <div class="text-2xl font-bold text-orange-700">Scalable</div>
+                        <div class="text-sm text-gray-600">Built to Grow</div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Key Highlights</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="text-2xl">🔐</span>
+                            <div>
+                                <div class="font-semibold text-gray-800">Secure Authentication</div>
+                                <div class="text-sm text-gray-600">Role-based access with Supabase Auth</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <span class="text-2xl">💳</span>
+                            <div>
+                                <div class="font-semibold text-gray-800">Payment Integration</div>
+                                <div class="text-sm text-gray-600">Stripe for secure transactions</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <span class="text-2xl">📦</span>
+                            <div>
+                                <div class="font-semibold text-gray-800">Order Management</div>
+                                <div class="text-sm text-gray-600">Complete admin dashboard</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <span class="text-2xl">📱</span>
+                            <div>
+                                <div class="font-semibold text-gray-800">Responsive Design</div>
+                                <div class="text-sm text-gray-600">Mobile-first approach</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Tab -->
+        <div id="features" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Feature Breakdown</h2>
+
+                <!-- Customer Features -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4 flex items-center">
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm mr-3">Customer</span>
+                        Shopping Experience
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">🔍</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Product Browsing</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Advanced filters</li>
+                                <li>• Search functionality</li>
+                                <li>• Sort options</li>
+                                <li>• Pagination</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">📸</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Product Details</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Image gallery with zoom</li>
+                                <li>• Specifications table</li>
+                                <li>• Rarity indicators</li>
+                                <li>• Authenticity info</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">🛒</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Shopping Cart</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Add/remove items</li>
+                                <li>• Update quantities</li>
+                                <li>• Persistent storage</li>
+                                <li>• Real-time totals</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">💳</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Checkout</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Shipping form</li>
+                                <li>• Stripe payments</li>
+                                <li>• Order confirmation</li>
+                                <li>• Email notifications</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">📜</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Order History</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• View past orders</li>
+                                <li>• Track status</li>
+                                <li>• Order details</li>
+                                <li>• Reorder option</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-blue-50 p-5 rounded-lg border border-blue-200">
+                            <div class="text-3xl mb-2">🔐</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Account</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Registration</li>
+                                <li>• Login/logout</li>
+                                <li>• Password reset</li>
+                                <li>• Profile management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Features -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-purple-700 mb-4 flex items-center">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm mr-3">Admin</span>
+                        Management Tools
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">📊</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Dashboard</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Sales analytics</li>
+                                <li>• Revenue metrics</li>
+                                <li>• Recent orders</li>
+                                <li>• Low stock alerts</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">📦</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Product Management</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Add new products</li>
+                                <li>• Edit existing</li>
+                                <li>• Upload images</li>
+                                <li>• Manage inventory</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">📋</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Order Management</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• View all orders</li>
+                                <li>• Customer details</li>
+                                <li>• Update status</li>
+                                <li>• Add tracking</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">🖼️</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Image Upload</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Multiple images</li>
+                                <li>• Drag & drop</li>
+                                <li>• Auto compression</li>
+                                <li>• Supabase storage</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">🔍</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Search & Filter</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Product search</li>
+                                <li>• Order search</li>
+                                <li>• Status filters</li>
+                                <li>• Date ranges</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card bg-purple-50 p-5 rounded-lg border border-purple-200">
+                            <div class="text-3xl mb-2">📤</div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Export</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Order details</li>
+                                <li>• Shipping labels</li>
+                                <li>• CSV export</li>
+                                <li>• PDF generation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Tab -->
+        <div id="architecture" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">System Architecture</h2>
+                
+                <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl mb-6">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Three-Tier Architecture</h3>
+                        <p class="text-gray-600">Modern, scalable application design</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Frontend -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500">
+                            <h4 class="text-xl font-semibold text-blue-700 mb-4">Frontend Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-blue-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Next.js 14+</div>
+                                    <div class="text-xs text-gray-600">React framework</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">TypeScript</div>
+                                    <div class="text-xs text-gray-600">Type safety</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Tailwind CSS</div>
+                                    <div class="text-xs text-gray-600">Styling</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">shadcn/ui</div>
+                                    <div class="text-xs text-gray-600">Components</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Backend -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-purple-500">
+                            <h4 class="text-xl font-semibold text-purple-700 mb-4">Backend Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-purple-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Supabase</div>
+                                    <div class="text-xs text-gray-600">Backend as a Service</div>
+                                </div>
+                                <div class="bg-purple-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">PostgreSQL</div>
+                                    <div class="text-xs text-gray-600">Database</div>
+                                </div>
+                                <div class="bg-purple-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Supabase Auth</div>
+                                    <div class="text-xs text-gray-600">Authentication</div>
+                                </div>
+                                <div class="bg-purple-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Storage</div>
+                                    <div class="text-xs text-gray-600">File management</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Integration -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-500">
+                            <h4 class="text-xl font-semibold text-green-700 mb-4">Integration Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-green-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Stripe</div>
+                                    <div class="text-xs text-gray-600">Payments</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Vercel</div>
+                                    <div class="text-xs text-gray-600">Hosting</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">Email Service</div>
+                                    <div class="text-xs text-gray-600">Notifications</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded">
+                                    <div class="font-semibold text-sm">CDN</div>
+                                    <div class="text-xs text-gray-600">Content delivery</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Flow -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Data Flow Diagram</h3>
+                    <div class="bg-white p-6 rounded-lg border-2 border-gray-200">
+                        <div class="flex flex-col space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="bg-blue-100 px-4 py-2 rounded-lg font-semibold text-blue-800">User Browser</div>
+                                <div class="flex-1 mx-4 border-t-2 border-dashed border-gray-300"></div>
+                                <div class="bg-purple-100 px-4 py-2 rounded-lg font-semibold text-purple-800">Next.js Server</div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="bg-purple-100 px-4 py-2 rounded-lg font-semibold text-purple-800">Next.js Server</div>
+                                <div class="flex-1 mx-4 border-t-2 border-dashed border-gray-300"></div>
+                                <div class="bg-green-100 px-4 py-2 rounded-lg font-semibold text-green-800">Supabase API</div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="bg-green-100 px-4 py-2 rounded-lg font-semibold text-green-800">Supabase API</div>
+                                <div class="flex-1 mx-4 border-t-2 border-dashed border-gray-300"></div>
+                                <div class="bg-orange-100 px-4 py-2 rounded-lg font-semibold text-orange-800">PostgreSQL DB</div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="bg-blue-100 px-4 py-2 rounded-lg font-semibold text-blue-800">Payment Form</div>
+                                <div class="flex-1 mx-4 border-t-2 border-dashed border-gray-300"></div>
+                                <div class="bg-red-100 px-4 py-2 rounded-lg font-semibold text-red-800">Stripe API</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Tab -->
+        <div id="database" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Database Schema</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Profiles Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">👤 profiles</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">UUID PK</span></div>
+                            <div class="flex justify-between"><span>email</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>full_name</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>phone</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>role</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>created_at</span><span class="font-mono">TIMESTAMP</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Categories Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">📁 categories</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">SERIAL PK</span></div>
+                            <div class="flex justify-between"><span>name</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>slug</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>description</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>created_at</span><span class="font-mono">TIMESTAMP</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Products Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">🪙 products</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">SERIAL PK</span></div>
+                            <div class="flex justify-between"><span>name</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>slug</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>category_id</span><span class="font-mono">INT FK</span></div>
+                            <div class="flex justify-between"><span>description</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>price</span><span class="font-mono">DECIMAL</span></div>
+                            <div class="flex justify-between"><span>stock_quantity</span><span class="font-mono">INT</span></div>
+                            <div class="flex justify-between"><span>condition</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>year</span><span class="font-mono">INT</span></div>
+                            <div class="flex justify-between"><span>rarity_level</span><span class="font-mono">TEXT</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Product Images Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">🖼️ product_images</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">SERIAL PK</span></div>
+                            <div class="flex justify-between"><span>product_id</span><span class="font-mono">INT FK</span></div>
+                            <div class="flex justify-between"><span>image_url</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>display_order</span><span class="font-mono">INT</span></div>
+                            <div class="flex justify-between"><span>created_at</span><span class="font-mono">TIMESTAMP</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">📦 orders</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">SERIAL PK</span></div>
+                            <div class="flex justify-between"><span>user_id</span><span class="font-mono">UUID FK</span></div>
+                            <div class="flex justify-between"><span>customer_name</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>customer_email</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>customer_phone</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>shipping_address...</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>total_amount</span><span class="font-mono">DECIMAL</span></div>
+                            <div class="flex justify-between"><span>order_status</span><span class="font-mono">TEXT</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items Table -->
+                    <div class="db-table p-6 rounded-lg text-white">
+                        <h3 class="text-xl font-bold mb-3">📋 order_items</h3>
+                        <div class="bg-white bg-opacity-20 rounded p-4 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>id</span><span class="font-mono">SERIAL PK</span></div>
+                            <div class="flex justify-between"><span>order_id</span><span class="font-mono">INT FK</span></div>
+                            <div class="flex justify-between"><span>product_id</span><span class="font-mono">INT FK</span></div>
+                            <div class="flex justify-between"><span>product_name</span><span class="font-mono">TEXT</span></div>
+                            <div class="flex justify-between"><span>quantity</span><span class="font-mono">INT</span></div>
+                            <div class="flex justify-between"><span>price</span><span class="font-mono">DECIMAL</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-900 mb-2">🔒 Security Features</h4>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li>• Row-Level Security (RLS) policies on all tables</li>
+                        <li>• Role-based access control (Customer vs Admin)</li>
+                        <li>• Encrypted connections to database</li>
+                        <li>• Automatic backups and point-in-time recovery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack Tab -->
+        <div id="tech-stack" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Technology Stack</h2>
+                
+                <div class="space-y-6">
+                    <!-- Frontend -->
+                    <div class="border-l-4 border-blue-500 pl-6 py-4 bg-blue-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-3">Frontend Technologies</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Next.js 14+</div>
+                                <div class="text-sm text-gray-600 mb-2">React Framework</div>
+                                <div class="text-xs text-green-600">✓ SSR/SSG, Image optimization, API routes</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">TypeScript</div>
+                                <div class="text-sm text-gray-600 mb-2">Programming Language</div>
+                                <div class="text-xs text-green-600">✓ Type safety, Better IDE support</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Tailwind CSS</div>
+                                <div class="text-sm text-gray-600 mb-2">Styling</div>
+                                <div class="text-xs text-green-600">✓ Utility-first, Highly customizable</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">shadcn/ui</div>
+                                <div class="text-sm text-gray-600 mb-2">Component Library</div>
+                                <div class="text-xs text-green-600">✓ Beautiful, Accessible components</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Zustand</div>
+                                <div class="text-sm text-gray-600 mb-2">State Management</div>
+                                <div class="text-xs text-green-600">✓ Lightweight, Simple API</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">TanStack Query</div>
+                                <div class="text-sm text-gray-600 mb-2">Data Fetching</div>
+                                <div class="text-xs text-green-600">✓ Caching, Auto refetch</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="border-l-4 border-purple-500 pl-6 py-4 bg-purple-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-purple-800 mb-3">Backend Technologies</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Supabase</div>
+                                <div class="text-sm text-gray-600 mb-2">Backend as a Service</div>
+                                <div class="text-xs text-green-600">✓ Complete backend solution</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">PostgreSQL</div>
+                                <div class="text-sm text-gray-600 mb-2">Database</div>
+                                <div class="text-xs text-green-600">✓ Reliable, Scalable</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Supabase Auth</div>
+                                <div class="text-sm text-gray-600 mb-2">Authentication</div>
+                                <div class="text-xs text-green-600">✓ Built-in, Secure</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Supabase Storage</div>
+                                <div class="text-sm text-gray-600 mb-2">File Storage</div>
+                                <div class="text-xs text-green-600">✓ S3-compatible, CDN included</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Edge Functions</div>
+                                <div class="text-sm text-gray-600 mb-2">Serverless Compute</div>
+                                <div class="text-xs text-green-600">✓ Business logic</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integration -->
+                    <div class="border-l-4 border-green-500 pl-6 py-4 bg-green-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-green-800 mb-3">Integration & Tools</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Stripe</div>
+                                <div class="text-sm text-gray-600 mb-2">Payment Gateway</div>
+                                <div class="text-xs text-green-600">✓ Industry leader, Secure</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Vercel</div>
+                                <div class="text-sm text-gray-600 mb-2">Hosting</div>
+                                <div class="text-xs text-green-600">✓ Zero-config, Fast deployments</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">GitHub</div>
+                                <div class="text-sm text-gray-600 mb-2">Version Control</div>
+                                <div class="text-xs text-green-600">✓ CI/CD, Collaboration</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Sentry</div>
+                                <div class="text-sm text-gray-600 mb-2">Error Tracking</div>
+                                <div class="text-xs text-green-600">✓ Real-time monitoring</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="font-semibold text-gray-800">Vitest</div>
+                                <div class="text-sm text-gray-600 mb-2">Testing</div>
+                                <div class="text-xs text-green-600">✓ Fast, Vite-compatible</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-5">
+                    <h4 class="font-semibold text-amber-900 mb-3">💡 Why This Stack?</h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                        <div>
+                            <strong>✓ Production-Ready:</strong> All components battle-tested at scale
+                        </div>
+                        <div>
+                            <strong>✓ Developer-Friendly:</strong> Great DX, documentation, community
+                        </div>
+                        <div>
+                            <strong>✓ Cost-Effective:</strong> Free tiers available, pay-as-you-grow
+                        </div>
+                        <div>
+                            <strong>✓ Scalable:</strong> Horizontal and vertical scaling supported
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap Tab -->
+        <div id="roadmap" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Development Roadmap</h2>
+                
+                <div class="space-y-6">
+                    <!-- Phase 1 -->
+                    <div class="relative pl-8 pb-6 timeline-item">
+                        <div class="absolute left-0 top-0 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                            <h3 class="text-xl font-semibold text-blue-800 mb-2">Phase 1: Foundation (Weeks 1-2)</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center"><span class="mr-2">✓</span> Set up Supabase project & database schema</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Implement authentication system</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Set up Next.js project with TypeScript</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Create basic UI components with shadcn/ui</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Configure development environment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="relative pl-8 pb-6 timeline-item">
+                        <div class="absolute left-0 top-0 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                        <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                            <h3 class="text-xl font-semibold text-purple-800 mb-2">Phase 2: Core Features (Weeks 3-4)</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center"><span class="mr-2">✓</span> Build product browsing & detail pages</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Implement shopping cart functionality</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Create admin product management interface</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Set up image upload to Supabase Storage</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Implement filters, search, and sorting</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="relative pl-8 pb-6 timeline-item">
+                        <div class="absolute left-0 top-0 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">3</div>
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h3 class="text-xl font-semibold text-green-800 mb-2">Phase 3: E-Commerce (Weeks 5-6)</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center"><span class="mr-2">✓</span> Integrate Stripe payment processing</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Build checkout flow with order creation</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Create admin order management dashboard</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Implement email notifications</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Add order history for customers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 4 -->
+                    <div class="relative pl-8 pb-6 timeline-item">
+                        <div class="absolute left-0 top-0 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">4</div>
+                        <div class="bg-orange-50 p-6 rounded-lg border border-orange-200">
+                            <h3 class="text-xl font-semibold text-orange-800 mb-2">Phase 4: Polish & Testing (Week 7)</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center"><span class="mr-2">✓</span> UI/UX refinements and responsive design</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Write unit and integration tests</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Performance optimization (images, code splitting)</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Security hardening and vulnerability testing</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Accessibility improvements</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Phase 5 -->
+                    <div class="relative pl-8 timeline-item">
+                        <div class="absolute left-0 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">5</div>
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                            <h3 class="text-xl font-semibold text-red-800 mb-2">Phase 5: Deployment (Week 8)</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-center"><span class="mr-2">✓</span> Deploy to Vercel production</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Set up monitoring and error tracking</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Configure custom domain</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> User acceptance testing</li>
+                                <li class="flex items-center"><span class="mr-2">✓</span> Documentation and launch preparation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-gray-100 p-5 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Total Timeline</h4>
+                            <p class="text-sm text-gray-600">From start to production deployment</p>
+                        </div>
+                        <div class="text-3xl font-bold text-blue-600">8 Weeks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scalability Tab -->
+        <div id="scalability" class="tab-content">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Scalability Strategy</h2>
+                
+                <div class="space-y-6">
+                    <!-- Phase 1: MVP -->
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-lg border-l-4 border-green-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-green-800">Phase 1: MVP Launch</h3>
+                            <span class="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">0-100 Users</span>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Infrastructure</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Supabase Free Tier (500MB DB)</li>
+                                    <li>• Vercel Hobby Plan</li>
+                                    <li>• Single region deployment</li>
+                                    <li>• Basic browser caching</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Cost</h4>
+                                <div class="text-2xl font-bold text-green-600">$0-25/mo</div>
+                                <p class="text-xs text-gray-600">Mostly free tier usage</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2: Growth -->
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg border-l-4 border-blue-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-blue-800">Phase 2: Growth</h3>
+                            <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">100-1,000 Users</span>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Infrastructure</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Supabase Pro ($25/mo - 8GB DB)</li>
+                                    <li>• Vercel Pro Plan</li>
+                                    <li>• CDN integration (Cloudflare)</li>
+                                    <li>• Database connection pooling</li>
+                                    <li>• Redis caching for API responses</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Optimizations</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Database indexing optimization</li>
+                                    <li>• Image CDN</li>
+                                    <li>• Query optimization</li>
+                                    <li>• Monitoring with Sentry</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-white p-3 rounded">
+                            <div class="font-semibold text-gray-800">Cost</div>
+                            <div class="text-2xl font-bold text-blue-600">$50-100/mo</div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3: Scale -->
+                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-lg border-l-4 border-purple-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-purple-800">Phase 3: Scale</h3>
+                            <span class="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">1,000-10,000 Users</span>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Infrastructure</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Supabase Team/Enterprise</li>
+                                    <li>• Vercel Enterprise</li>
+                                    <li>• Multi-region CDN</li>
+                                    <li>• Database read replicas</li>
+                                    <li>• Advanced caching strategies</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">Optimizations</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Full-text search optimization</li>
+                                    <li>• Background job processing</li>
+                                    <li>• Rate limiting</li>
+                                    <li>• Comprehensive monitoring (Datadog)</li>
+                                    <li>• Database partitioning</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-white p-3 rounded">
+                            <div class="font-semibold text-gray-800">Cost</div>
+                            <div class="text-2xl font-bold text-purple-600">$200-500/mo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scaling Strategies -->
+                <div class="mt-6 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Key Scaling Strategies</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">🗄️</span> Database Scaling
+                            </h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Vertical scaling (upgrade Supabase plan)</li>
+                                <li>• Connection pooling (PgBouncer)</li>
+                                <li>• Read replicas for reporting</li>
+                                <li>• Database partitioning for large tables</li>
+                                <li>• Archive old data</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">⚡</span> Application Scaling
+                            </h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Horizontal scaling (auto with Vercel)</li>
+                                <li>• Stateless application design</li>
+                                <li>• CDN for static assets</li>
+                                <li>• API rate limiting per user</li>
+                                <li>• Edge functions for compute</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">📁</span> Storage Scaling
+                            </h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Supabase Storage auto-scales</li>
+                                <li>• Image optimization pipeline</li>
+                                <li>• Lazy loading & progressive images</li>
+                                <li>• CDN for image delivery</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">🚀</span> Performance
+                            </h4>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Code splitting</li>
+                                <li>• Tree shaking</li>
+                                <li>• Server-side rendering (Next.js)</li>
+                                <li>• Incremental static regeneration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-xl font-semibold mb-2">NumisMarket E-Commerce Platform</h3>
+            <p class="text-gray-400 mb-4">Complete Product Specifications & Technical Documentation</p>
+            <div class="text-sm text-gray-500">
+                Last Updated: February 10, 2026 | Version 1.0
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active state from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-amber-500', 'text-amber-600');
+                btn.classList.add('border-transparent', 'text-gray-600');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active state to clicked button
+            const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            activeBtn.classList.remove('border-transparent', 'text-gray-600');
+            activeBtn.classList.add('border-amber-500', 'text-amber-600');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Set initial active tab
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('overview');
+        });
+    </script>
+</body>
+</html>
