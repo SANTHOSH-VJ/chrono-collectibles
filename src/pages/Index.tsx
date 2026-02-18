@@ -7,12 +7,35 @@ import ProductCard from "@/components/ProductCard";
 import heroBg from "@/assets/hero-bg.jpg";
 import categoryCoins from "@/assets/category-coins.jpg";
 import categoryCurrency from "@/assets/category-currency.jpg";
+import { useState, useEffect } from "react";
+import AuthModal from "@/components/AuthModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const featuredProducts = products.slice(0, 6);
 
 const Index = () => {
+  const { user } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  useEffect(() => {
+    // Show auth modal on first visit per session (not if already logged in)
+    if (!user && !sessionStorage.getItem("auth_modal_shown")) {
+      const timer = setTimeout(() => {
+        setShowAuthModal(true);
+        sessionStorage.setItem("auth_modal_shown", "1");
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
+
   return (
     <div className="flex flex-col">
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          onGuestContinue={() => setShowAuthModal(false)}
+        />
+      )}
       {/* Hero */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
         <img src={heroBg} alt="Collectible coins" className="absolute inset-0 h-full w-full object-cover" />

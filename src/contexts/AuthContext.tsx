@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, AuthError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import type { Database } from '@/lib/database.types';
 import { toast } from 'sonner';
+
+type ProfileUpdate = Database['public']['Tables']['profiles']['Update'];
 
 interface AuthContextType {
     user: User | null;
@@ -78,8 +81,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if (error) throw error;
 
-            setProfile(data);
-            setIsAdmin(data?.role === 'admin');
+            if (data) {
+                setProfile(data as unknown as UserProfile);
+                setIsAdmin((data as any).role === 'admin');
+            }
         } catch (error) {
             console.error('Error fetching profile:', error);
             setProfile(null);
@@ -132,18 +137,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const signOut = async () => {
+        // Always clear local state first — even if Supabase API call fails
+        // (expired session, network error) the user should still be signed out locally
+        setUser(null);
+        setProfile(null);
+        setIsAdmin(false);
         try {
-            const { error } = await supabase.auth.signOut();
-            if (error) throw error;
-
-            setUser(null);
-            setProfile(null);
-            setIsAdmin(false);
+            await supabase.auth.signOut();
             toast.success('Signed out successfully');
-        } catch (error) {
-            const authError = error as AuthError;
-            toast.error(authError.message || 'Failed to sign out');
-            throw error;
+        } catch {
+            // Silently ignore — local state is already cleared above
         }
     };
 
@@ -154,7 +157,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         try {
-            const { error } = await supabase
+            const { error } = await (supabase as any)
                 .from('profiles')
                 .update(data)
                 .eq('id', user.id);
