@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SlidersHorizontal, X } from "lucide-react";
-import { products } from "@/data/products";
+import { useProducts, ProductWithImages } from "@/hooks/useProducts";
 import ProductCard from "@/components/ProductCard";
 import FilterSidebar, { Filters } from "@/components/FilterSidebar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -27,33 +28,39 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("featured");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  // Fetch products from Supabase with category filter
+  const { data: products, isLoading } = useProducts({
+    category: filters.category || undefined,
+    minPrice: filters.priceRange[0] > 0 ? filters.priceRange[0] : undefined,
+    maxPrice: filters.priceRange[1] < 6000 ? filters.priceRange[1] : undefined,
+  });
+
+  // Apply additional client-side filtering for multi-value filters
   const filtered = useMemo(() => {
-    let result = products.filter((p) => {
-      if (filters.category && p.category !== filters.category) return false;
-      if (p.price < filters.priceRange[0] || p.price > filters.priceRange[1]) return false;
-      if (filters.conditions.length && !filters.conditions.includes(p.condition)) return false;
-      if (filters.rarityLevels.length && !filters.rarityLevels.includes(p.rarityLevel)) return false;
-      if (filters.countries.length && !filters.countries.includes(p.country)) return false;
+    let result = (products || []).filter((p: ProductWithImages) => {
+      if (filters.conditions.length && !filters.conditions.includes(p.condition || "")) return false;
+      if (filters.rarityLevels.length && !filters.rarityLevels.includes(p.rarity_level || "")) return false;
+      if (filters.countries.length && !filters.countries.includes(p.country || "")) return false;
       return true;
     });
 
     switch (sortBy) {
       case "price-asc":
-        result.sort((a, b) => a.price - b.price);
+        result.sort((a, b) => Number(a.price) - Number(b.price));
         break;
       case "price-desc":
-        result.sort((a, b) => b.price - a.price);
+        result.sort((a, b) => Number(b.price) - Number(a.price));
         break;
       case "name":
         result.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case "year":
-        result.sort((a, b) => a.year - b.year);
+        result.sort((a, b) => (a.year || 0) - (b.year || 0));
         break;
     }
 
     return result;
-  }, [filters, sortBy]);
+  }, [products, filters.conditions, filters.rarityLevels, filters.countries, sortBy]);
 
   return (
     <div className="container py-8">
@@ -97,7 +104,21 @@ const Products = () => {
 
         {/* Products Grid */}
         <div className="flex-1">
-          {filtered.length === 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="rounded-lg border border-border bg-card overflow-hidden">
+                  <Skeleton className="aspect-square w-full" />
+                  <div className="p-4 space-y-2">
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-3 w-20" />
+                    <Skeleton className="h-6 w-16" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground">No items match your filters.</p>
               <Button variant="link" className="text-primary mt-2" onClick={() => setFilters({ category: "", priceRange: [0, 6000], conditions: [], rarityLevels: [], countries: [] })}>

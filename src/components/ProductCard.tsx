@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
-import { Product } from "@/data/products";
+import { ProductWithImages } from "@/hooks/useProducts";
 import { Badge } from "@/components/ui/badge";
 
 const rarityStars: Record<string, number> = {
@@ -21,8 +21,8 @@ const conditionColor: Record<string, string> = {
   Uncirculated: "bg-primary/30 text-primary",
 };
 
-const ProductCard = ({ product }: { product: Product }) => {
-  const stars = rarityStars[product.rarityLevel] ?? 1;
+const ProductCard = ({ product }: { product: ProductWithImages }) => {
+  const stars = rarityStars[product.rarity_level || "Common"] ?? 1;
 
   return (
     <Link
@@ -37,7 +37,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <Badge className={`absolute top-3 left-3 text-[10px] font-semibold border-0 ${conditionColor[product.condition]}`}>
+        <Badge className={`absolute top-3 left-3 text-[10px] font-semibold border-0 ${conditionColor[product.condition || "Good"]}`}>
           {product.condition}
         </Badge>
       </div>
@@ -55,7 +55,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               className={`h-3 w-3 ${i < stars ? "fill-primary text-primary" : "text-border"}`}
             />
           ))}
-          <span className="ml-1.5 text-[10px] text-muted-foreground">{product.rarityLevel}</span>
+          <span className="ml-1.5 text-[10px] text-muted-foreground">{product.rarity_level}</span>
         </div>
         <p className="text-lg font-bold text-primary font-display">
           ${product.price.toLocaleString()}

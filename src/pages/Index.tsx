@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Search, ArrowRight } from "lucide-react";
 import { Shield, Truck, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 import ProductCard from "@/components/ProductCard";
 import heroBg from "@/assets/hero-bg.jpg";
 import categoryCoins from "@/assets/category-coins.jpg";
@@ -10,11 +10,12 @@ import categoryCurrency from "@/assets/category-currency.jpg";
 import { useState, useEffect } from "react";
 import AuthModal from "@/components/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
-
-const featuredProducts = products.slice(0, 6);
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
   const { user } = useAuth();
+  const { data: products, isLoading } = useProducts();
+  const featuredProducts = (products || []).slice(0, 6);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
@@ -127,9 +128,23 @@ const Index = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="rounded-lg border border-border bg-card overflow-hidden">
+                  <Skeleton className="aspect-square w-full" />
+                  <div className="p-4 space-y-2">
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-3 w-20" />
+                    <Skeleton className="h-6 w-16" />
+                  </div>
+                </div>
+              ))
+            ) : (
+              featuredProducts.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))
+            )}
           </div>
         </div>
       </section>

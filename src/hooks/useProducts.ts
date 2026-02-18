@@ -7,7 +7,7 @@ type Product = Database['public']['Tables']['products']['Row'];
 type ProductInsert = Database['public']['Tables']['products']['Insert'];
 type ProductUpdate = Database['public']['Tables']['products']['Update'];
 
-interface ProductWithImages extends Product {
+export interface ProductWithImages extends Product {
     images: string[];
     category?: {
         name: string;
@@ -15,7 +15,7 @@ interface ProductWithImages extends Product {
     };
 }
 
-interface ProductFilters {
+export interface ProductFilters {
     category?: string;
     minPrice?: number;
     maxPrice?: number;
